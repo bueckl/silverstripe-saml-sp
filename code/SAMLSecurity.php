@@ -35,6 +35,7 @@ class SAMLSecurity extends Controller
         'login',
         'logout',
         'loggedout',
+        'LoginForm'
     );
 
     public function init()
@@ -297,4 +298,16 @@ class SAMLSecurity extends Controller
             Director::forceSSL();
         }
     }
+    
+    
+	/**
+	 * Get the login form to process according to the submitted data
+	 *
+	 * @return Form
+	 */
+	public function LoginForm() {
+		$authenticator = $this->getAuthenticator();
+		if($authenticator) return $authenticator::get_login_form($this);
+		throw new Exception('Passed invalid authentication method');
+	}
 }
