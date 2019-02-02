@@ -310,4 +310,20 @@ class SAMLSecurity extends Controller
 		if($authenticator) return $authenticator::get_login_form($this);
 		throw new Exception('Passed invalid authentication method');
 	}
+    
+	/**
+	 * Get the selected authenticator for this request
+	 *
+	 * @return string Class name of Authenticator
+	 */
+	protected function getAuthenticator() {
+		$authenticator = $this->getRequest()->requestVar('AuthenticationMethod');
+		if($authenticator) {
+			$authenticators = Authenticator::get_authenticators();
+			if(in_array($authenticator, $authenticators)) {
+				return $authenticator;
+			}
+		}
+		return Authenticator::get_default_authenticator();
+	}
 }
