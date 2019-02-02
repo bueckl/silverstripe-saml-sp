@@ -299,6 +299,26 @@ class SAMLSecurity extends Controller
         }
     }
     
+    /*
+    The following two methods make it possible to bypass SAML Security and to perform a normal loggin
+    by calling /Security/login?type=locale. Project config needs the following code addend !!!
+
+
+    if ( $_GET['type'] == "locale" ) { 
+    	// process all request of '/security' with the SAML controller.
+    	Config::inst()->update('Director', 'rules', array(
+    		'Security//$Action/$ID/$OtherID' => 'Security',
+    		'security//$Action/$ID/$OtherID' => 'Security'
+    	));
+    } else {
+    	Config::inst()->update('Director', 'rules', array(
+    		'Security//$Action/$ID/$OtherID' => 'SAMLSecurity',
+    		'security//$Action/$ID/$OtherID' => 'SAMLSecurity'
+    	));
+    }
+    
+    */
+    
     
 	/**
 	 * Get the login form to process according to the submitted data
