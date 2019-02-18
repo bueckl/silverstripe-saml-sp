@@ -204,7 +204,29 @@ class SAMLSecurity extends Controller
                 array('class' => get_class($auth))
             ));
         }
-
+        
+        $attr = self::$authenticator->getAttributes();
+        
+        /* HACK JOCHEN TO SIGNUP USERS NOT KNOWN TO THE SYSTEM YET */
+        if(!$member->ID) {
+            
+            if ( $attr['customer.email'] != "" ) {
+                $member = new Member();
+                $member->Email = $attr['customer.email'];
+                $member->Locale = $attr['customer.language'];
+                $member->FirstName = $attr['firstname'];
+                $member->Surname = $attr['customer.name'];
+                $member->Phone = $attr['customer.phone'];
+                $member->StreetAddress = $attr['customer.street'];
+                $member->City = $attr['customer.town'];
+                $member->Betriebsnummer = $attr['ident'];
+                $member->Handelspartner = $attr['lastname'];
+                $member->write();
+                
+            }
+        }
+        
+        
         $member->login();
 
         // Use the BackURL for redirection if avaiable, or fall back on RelayState
