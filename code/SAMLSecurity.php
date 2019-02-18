@@ -215,12 +215,12 @@ class SAMLSecurity extends Controller
                 $member->Email = $attr['customer.email'];
                 $member->Locale = $attr['customer.language'];
                 $member->FirstName = $attr['firstname'];
-                $member->Surname = $attr['customer.name'];
+                $member->Surname = $attr['lastname'];
                 $member->Phone = $attr['customer.phone'];
                 $member->StreetAddress = $attr['customer.street'];
                 $member->City = $attr['customer.town'];
                 $member->Betriebsnummer = $attr['ident'];
-                $member->Handelspartner = $attr['lastname'];
+                $member->Handelspartner = $attr['customer.name'];
                 $member->write();
                 
             }
