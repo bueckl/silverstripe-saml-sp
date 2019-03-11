@@ -204,17 +204,17 @@ class SAMLSecurity extends Controller
                 array('class' => get_class($auth))
             ));
         }
-        
+
         $attr = self::$authenticator->getAttributes();
-        
+
         /* HACK JOCHEN TO SIGNUP USERS NOT KNOWN TO THE SYSTEM YET */
         if(!$member->ID) {
-            
+
             if ( $attr['customer.email'] != "" ) {
-                
+
 
                 $member = new Member();
-                
+
                 $member->Email = $attr['customer.email'][0];
                 $member->Locale = $attr['customer.language'][0];
                 $member->FirstName = $attr['firstname'][0];
@@ -224,12 +224,16 @@ class SAMLSecurity extends Controller
                 $member->City = $attr['customer.town'][0];
                 $member->Betriebsnummer = $attr['ident'][0];
                 $member->Handelspartner = $attr['customer.name'][0];
-                $member->write();
+
+                debug::dump( $attr );
+                debug::dump($member); die;
                 
+                $member->write();
+
             }
         }
-        
-        
+
+
         $member->login();
 
         // Use the BackURL for redirection if avaiable, or fall back on RelayState
@@ -323,13 +327,13 @@ class SAMLSecurity extends Controller
             Director::forceSSL();
         }
     }
-    
+
     /*
     The following two methods make it possible to bypass SAML Security and to perform a normal loggin
     by calling /Security/login?type=locale. Project config needs the following code addend !!!
 
 
-    if ( $_GET['type'] == "locale" ) { 
+    if ( $_GET['type'] == "locale" ) {
     	// process all request of '/security' with the SAML controller.
     	Config::inst()->update('Director', 'rules', array(
     		'Security//$Action/$ID/$OtherID' => 'Security',
@@ -341,10 +345,10 @@ class SAMLSecurity extends Controller
     		'security//$Action/$ID/$OtherID' => 'SAMLSecurity'
     	));
     }
-    
+
     */
-    
-    
+
+
 	/**
 	 * Get the login form to process according to the submitted data
 	 *
@@ -355,7 +359,7 @@ class SAMLSecurity extends Controller
 		if($authenticator) return $authenticator::get_login_form($this);
 		throw new Exception('Passed invalid authentication method');
 	}
-    
+
 	/**
 	 * Get the selected authenticator for this request
 	 *
