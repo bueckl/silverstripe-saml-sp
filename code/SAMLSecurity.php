@@ -207,10 +207,6 @@ class SAMLSecurity extends Controller
 
         $attr = self::$authenticator->getAttributes();
 
-        debug::dump( $attr );
-        debug::dump($member); die;
-
-        
         /* HACK JOCHEN TO SIGNUP USERS NOT KNOWN TO THE SYSTEM YET */
         if(!$member->ID) {
 
@@ -228,10 +224,6 @@ class SAMLSecurity extends Controller
                 $member->City = $attr['customer.town'][0];
                 $member->Betriebsnummer = $attr['ident'][0];
                 $member->Handelspartner = $attr['customer.name'][0];
-
-                debug::dump( $attr );
-                debug::dump($member); die;
-
                 $member->write();
 
             }
