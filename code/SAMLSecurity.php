@@ -214,20 +214,20 @@ class SAMLSecurity extends Controller
         /* HACK JOCHEN TO SIGNUP USERS NOT KNOWN TO THE SYSTEM YET */
         if(!$member->ID) {
 
-            if ( $attr['customer.email'] != "" ) {
+            if ( $attr['ident'] != "" ) {
 
 
                 $member = new Member();
 
-                $member->Email = $attr['customer.email'][0];
-                $member->Locale = $attr['customer.language'][0];
-                $member->FirstName = $attr['firstname'][0];
-                $member->Surname = $attr['lastname'][0];
-                $member->Phone = $attr['customer.phone'][0];
-                $member->StreetAddress = $attr['customer.street'][0];
-                $member->City = $attr['customer.town'][0];
-                $member->Betriebsnummer = $attr['ident'][0];
-                $member->Handelspartner = $attr['customer.name'][0];
+                // $member->Email = $attr['customer.email'][0];
+                // $member->Locale = $attr['customer.language'][0];
+                // $member->FirstName = $attr['firstname'][0];
+                // $member->Surname = $attr['lastname'][0];
+                // $member->Phone = $attr['customer.phone'][0];
+                // $member->StreetAddress = $attr['customer.street'][0];
+                // $member->City = $attr['customer.town'][0];
+                $member->Betriebsnummer = $attr['ident'];
+                //$member->Handelspartner = $attr['customer.name'][0];
 
                 // debug::dump( $attr );
                 // debug::dump($member); die;
