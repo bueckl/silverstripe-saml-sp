@@ -207,7 +207,7 @@ class SAMLSecurity extends Controller
 
         $attr = self::$authenticator->getAttributes();
 
-        // debug::dump( $attr );
+        // debug::dump( $attr ); die;
         // debug::dump($member); die;
 
 
@@ -215,31 +215,17 @@ class SAMLSecurity extends Controller
         if(!$member->ID) {
 
             if ( $attr['ident'] != "" ) {
-
-
                 $member = new Member();
-
-                // $member->Email = $attr['customer.email'][0];
-                // $member->Locale = $attr['customer.language'][0];
-                // $member->FirstName = $attr['firstname'][0];
-                // $member->Surname = $attr['lastname'][0];
-                // $member->Phone = $attr['customer.phone'][0];
-                // $member->StreetAddress = $attr['customer.street'][0];
-                // $member->City = $attr['customer.town'][0];
-                $member->Betriebsnummer = $attr['ident'];
-                //$member->Handelspartner = $attr['customer.name'][0];
-
-                // debug::dump( $attr );
-                // debug::dump($member); die;
-
+                $member->Betriebsnummer = $attr['ident'][0];
+                $member->Handelspartner = $attr['login'][0];
                 $member->write();
 
             }
+        } else {
         }
 
 
         $member->login();
-
         // Use the BackURL for redirection if avaiable, or fall back on RelayState
         $dest = Session::get('BackURL');
         if (empty($dest)) {
